@@ -1,0 +1,27 @@
+@import '~@palmetto/palmetto-design-tokens/build/scss/variables-size';
+
+.ta-l { text-align: left; }
+.ta-r { text-align: right; }
+.ta-c { text-align: center; }
+.ta-j { text-align: justify; }
+
+@media (min-width: $size-breakpoint-tablet) {
+  .ta-l-ns { text-align: left; }
+  .ta-r-ns { text-align: right; }
+  .ta-c-ns { text-align: center; }
+  .ta-j-ns { text-align: justify; }
+}
+
+@media (min-width: $size-breakpoint-desktop) {
+  .ta-l-m { text-align: left; }
+  .ta-r-m { text-align: right; }
+  .ta-c-m { text-align: center; }
+  .ta-j-m { text-align: justify; }
+}
+
+@media (min-width: $size-breakpoint-hd) {
+  .ta-l-l { text-align: left; }
+  .ta-r-l { text-align: right; }
+  .ta-c-l { text-align: center; }
+  .ta-j-l { text-align: justify; }
+}

@@ -88,6 +88,7 @@ const DateInput: FC<DateInputProps> = ({
   const [isPopoverOpen, setPopoverOpen] = useState(false);
   const prevIsPopoverOpen = useRef(false);
   const textInputRef = useRef<HTMLDivElement>(null);
+  const [value, setValue] = useState<string>('');
 
   const handleTogglePopover = (newPopoverOpenState: boolean) => {
     setPopoverOpen(newPopoverOpenState);
@@ -138,8 +139,8 @@ const DateInput: FC<DateInputProps> = ({
         id={mergedTextInputProps.id}
         name={mergedTextInputProps.name}
         label={mergedTextInputProps.label}
-        value={getTextInputValue()}
-        onChange={event => { console.log(event) }}
+        value={value}
+        onChange={event => { setValue(event.target.value) }}
         onClick={() => {}}
         ref={textInputRef}
         onBlur={handleBlur}

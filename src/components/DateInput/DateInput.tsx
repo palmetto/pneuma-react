@@ -139,11 +139,12 @@ const DateInput: FC<DateInputProps> = ({
         name={mergedTextInputProps.name}
         label={mergedTextInputProps.label}
         value={getTextInputValue()}
-        onChange={() => null}
-        onClick={() => handleTogglePopover(true)}
+        onChange={event => { console.log(event) }}
+        onClick={() => {}}
         ref={textInputRef}
         onBlur={handleBlur}
-        readOnly
+        // readOnly
+        type="date"
         {...restProps}
       />
     </Popover>

@@ -112,7 +112,7 @@ export interface TextInputBaseProps {
   /**
    * The input 'type' value. Defaults to type 'text'.
    */
-  type?: 'text' | 'password' | 'email' | 'tel' | 'url' | 'search';
+  type?: 'text' | 'password' | 'email' | 'tel' | 'url' | 'search' | 'date';
 }
 export interface TextInputProps extends TextInputBaseProps {
   /**

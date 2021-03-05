@@ -14,14 +14,27 @@ For entering these types of dates we recommend using the `TextInput` component w
 [TextInput Date Example](?path=/docs/components-textinput-overview--with-date-mask)
 
 <Canvas isExpanded>
-  <DateInput
-    textInputProps={{
-      id: 'exampleDateInput',
-      name: 'selectDate',
-      label: 'Select a Date',
-      placeholder: 'e.g. 11/02/2020',
+  <Story name="Demo">
+    {() => {
+      const [selectedDate, setSelectedDate] = useState(null);
+      const handleClear = () => {
+        setSelectedDate(null);
+      };
+      return (
+        <DateInput
+          datePickerProps={{
+            onChange: date => { setSelectedDate(date) },
+          }}
+          textInputProps={{
+            id: 'exampleDateInput',
+            name: 'selectDate',
+            label: 'Select a Date',
+            placeholder: '11-02-2020',
+          }}
+        />
+      );
     }}
-  />
+  </Story>
 </Canvas>
 
 ## Props
@@ -53,7 +66,7 @@ select dates with minimal work.
             onChange: setSelectedDate,
           }}
           textInputProps={{
-            placeholder: 'e.g. 11/02/2020',
+            placeholder: '11-02-2020',
             onClear: handleClear,
             id: 'defaultDatePicker',
             name: 'selectDate',

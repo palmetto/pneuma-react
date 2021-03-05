@@ -1,6 +1,5 @@
 import React, {
   FC,
-  ChangeEvent,
   forwardRef,
   MouseEvent,
   KeyboardEvent,
@@ -10,9 +9,9 @@ import React, {
 } from 'react';
 import classNames from 'classnames';
 import Cleave from 'cleave.js/react';
-import { ChangeEvent as CleaveChangeEvent } from 'cleave.js/react/props';
 import { UnknownPropertiesObjType } from '../../types';
 import * as InputMasks from './TextInputMasks';
+import getInputMask from './getInputMask';
 import Box from '../Box/Box';
 import Icon from '../Icon/Icon';
 import FormLabel from '../FormLabel/FormLabel';
@@ -20,8 +19,13 @@ import InputValidationMessage from '../InputValidationMessage/InputValidationMes
 import getAutoCompleteValue from '../../lib/getAutoCompleteValue';
 import styles from './TextInput.module.scss';
 
-type inputMaskType = ('phone' | 'creditCard' | 'date') | UnknownPropertiesObjType;
+export type InputMaskType = ('phone' | 'creditCard' | 'date') | UnknownPropertiesObjType;
 
+export interface TextInputChangeEvent<T> extends React.ChangeEvent<T> {
+  target: { rawValue?: string } & EventTarget & T;
+}
+
+export type OnChangeHandler = (event: TextInputChangeEvent<HTMLInputElement>) => void;
 export interface TextInputBaseProps {
   /**
    * The input's id attribute. Used to programmatically tie the input with its label.
@@ -61,7 +65,7 @@ export interface TextInputBaseProps {
    * Can be one of the existing present strings, or a custom object with options.
    * For options object formats See https://github.com/nosir/cleave.js.
    */
-  inputMask?: inputMaskType;
+  inputMask?: InputMaskType;
   /**
    * The input's disabled attribute
    */
@@ -118,7 +122,7 @@ export interface TextInputProps extends TextInputBaseProps {
   /**
    * Callback function to call on change event.
    */
-  onChange: (event: ChangeEvent<HTMLInputElement> | CleaveChangeEvent<HTMLInputElement>) => void;
+  onChange: OnChangeHandler;
   /**
    * The text value of the input. Required since our Input is a controlled component.
    */
@@ -159,31 +163,6 @@ const TextInput: FC<TextInputProps> = forwardRef<HTMLInputElement & Component, T
     },
     ref,
   ) => {
-    const getInputMask = (
-      mask: inputMaskType,
-      availableInputMasks: {
-        phone: {
-          numericOnly: boolean;
-          blocks: number[];
-          delimiters: string[];
-        };
-        creditCard: {
-          creditCard: boolean;
-        };
-        date: {
-          date: boolean;
-          delimiter: string;
-          datePattern: string[];
-        };
-      },
-    ) => {
-      if (typeof mask === 'string') {
-        return availableInputMasks[mask];
-      }
-
-      return mask;
-    };
-
     const inputWrapperClasses = classNames(styles['text-input-wrapper'], styles[size], {
       [styles.error]: error,
       [styles.disabled]: isDisabled,
@@ -262,7 +241,7 @@ const TextInput: FC<TextInputProps> = forwardRef<HTMLInputElement & Component, T
           {suffix && (
             <Box color="grey-400" className="ws-nowrap">
               {suffix}
-            </Box>
+            </Box>   
           )}
         </Box>
         {error && error !== true && <InputValidationMessage>{error}</InputValidationMessage>}

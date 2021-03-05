@@ -3031,7 +3031,7 @@
   resolved "https://registry.yarnpkg.com/@types/classnames/-/classnames-2.2.11.tgz#2521cc86f69d15c5b90664e4829d84566052c1cf"
   integrity sha512-2koNhpWm3DgWRp5tpkiJ8JGc1xTn2q0l+jUNUE7oMKXUf5NpI9AIdC4kbjGNFBdHtcxBD18LAksoudAVhFKCjw==
 
-"@types/cleave.js@^1.4.3":
+"@types/cleave.js@^1.4.4":
   version "1.4.4"
   resolved "https://registry.yarnpkg.com/@types/cleave.js/-/cleave.js-1.4.4.tgz#66f0ee5218283f2c9623c49074eb3f34333952ac"
   integrity sha512-uYFjWMPSBGBfbgfPna6yDenevtDSgqfkDXb/3dct6DXHiFs3InI3fpw51wb94zW8kHcNh1MUadboN55RAvSLEw==

@@ -5,14 +5,18 @@ import React, {
   FocusEvent,
   useEffect,
 } from 'react';
-import format from 'date-fns/format';
+import Cleave from 'cleave.js';
+import * as TextInputMasks from '../TextInput/TextInputMasks';
+import getInputMask from '../TextInput/getInputMask';
 import DatePicker, { DatePickerProps } from '../DatePicker/DatePicker';
-import TextInput, { TextInputBaseProps } from '../TextInput/TextInput';
+import TextInput, { TextInputBaseProps, OnChangeHandler, InputMaskType } from '../TextInput/TextInput';
 import Popover, { PopoverProps } from '../Popover/Popover';
+import Icon from '../Icon/Icon';
+import Button from '../Button/Button';
 
 export interface DateInputProps {
   datePickerProps: DatePickerProps;
-  textInputProps: TextInputBaseProps;
+  textInputProps: TextInputBaseProps & { inputMask: InputMaskType };
   dateFormat?: string;
   dateOptions?: {
     locale?: globalThis.Locale | undefined;
@@ -40,6 +44,7 @@ const defaultPopoverProps: Omit<PopoverProps, 'children' | 'content' | 'isOpen'>
 
 const defaultTextInputProps: Omit<TextInputBaseProps, 'id'> = {
   label: 'Select Date',
+  inputMask: 'date',
 };
 
 const DateInput: FC<DateInputProps> = ({
@@ -66,28 +71,31 @@ const DateInput: FC<DateInputProps> = ({
     ...textInputProps,
   };
 
-  const getTextInputValue = () => {
-    const {
-      selectsRange,
-      startDate,
-      endDate,
-      selected,
-    } = mergedDatePickerProps;
+  // const getTextInputValue = () => {
+  //   const {
+  //     selectsRange,
+  //     startDate,
+  //     endDate,
+  //     selected,
+  //   } = mergedDatePickerProps;
 
-    const formattedStartDate = startDate ? format(startDate, dateFormat, dateOptions) : '';
-    const formattedEndDate = endDate ? format(endDate, dateFormat, dateOptions) : '';
-    const formattedSelectedDate = selected ? format(selected, dateFormat, dateOptions) : '';
+  //   const formattedStartDate = startDate ? format(startDate, dateFormat, dateOptions) : '';
+  //   const formattedEndDate = endDate ? format(endDate, dateFormat, dateOptions) : '';
+  //   const formattedSelectedDate = selected ? format(selected, dateFormat, dateOptions) : '';
 
-    if (selectsRange) {
-      return `${formattedStartDate}${formattedStartDate || formattedEndDate ? ' - ' : ''}${formattedEndDate}`;
-    }
+  //   if (selectsRange) {
+  //     return `${formattedStartDate}${formattedStartDate || formattedEndDate ? ' - ' : ''}${formattedEndDate}`;
+  //   }
 
-    return formattedSelectedDate;
-  };
+  //   return formattedSelectedDate;
+  // };
 
   const [isPopoverOpen, setPopoverOpen] = useState(false);
   const prevIsPopoverOpen = useRef(false);
   const textInputRef = useRef<HTMLDivElement>(null);
+  const [cleaveInstance, setCleaveInstance] = useState<Cleave | null>(null);
+  const [dateRawValue, setDateRawValue] = useState<string>('');
+  const [dateISOValue, setDateISOValue] = useState<string>('');
 
   const handleTogglePopover = (newPopoverOpenState: boolean) => {
     setPopoverOpen(newPopoverOpenState);
@@ -101,6 +109,35 @@ const DateInput: FC<DateInputProps> = ({
     onBlur(event);
   };
 
+  const handleDateInputInit: (owner: Cleave) => void = cleaveInstance => {
+    setCleaveInstance(cleaveInstance);
+  }
+
+  const handleTextInputChange: OnChangeHandler = event => {
+    setDateRawValue(event.target.rawValue ?? '');
+
+    if (cleaveInstance && cleaveInstance.getISOFormatDate()) {
+      setDateISOValue(cleaveInstance.getISOFormatDate());
+      mergedDatePickerProps.onChange(new Date(cleaveInstance?.getISOFormatDate()), event);
+    }
+  }
+
+  const handleDatePickerChange: DatePickerProps['onChange'] = date => {
+    const year = ((date as Date)?.getFullYear()).toString();
+    const month = ((date as Date)?.getMonth() + 1).toString();
+    const day = ((date as Date)?.getDate()).toString();
+
+    const rawValue = `${month.length > 1 ? month : '0' + month}${day.length > 1 ? day : '0' + day}${year}`;
+
+    setDateRawValue(rawValue)
+  }
+
+  useEffect(() => {
+    if (cleaveInstance) {
+      cleaveInstance.setRawValue(dateRawValue);
+    }
+  }, [dateRawValue]);
+ 
   useEffect(() => {
     // These events are to trigger a blur event on the input at the correct time (for form validation)
     // The input is technically blurred whenever calendar popover is interacted with but we don't want that to
@@ -119,7 +156,7 @@ const DateInput: FC<DateInputProps> = ({
   const renderDatePicker = () => (
     <DatePicker
       {...mergedDatePickerProps}
-      onChange={mergedDatePickerProps.onChange}
+      onChange={handleDatePickerChange}
       selected={mergedDatePickerProps.selected}
       selectsRange={mergedDatePickerProps.selectsRange}
     />
@@ -138,12 +175,19 @@ const DateInput: FC<DateInputProps> = ({
         id={mergedTextInputProps.id}
         name={mergedTextInputProps.name}
         label={mergedTextInputProps.label}
-        value={getTextInputValue()}
-        onChange={() => null}
-        onClick={() => handleTogglePopover(true)}
+        value={dateRawValue}
+        onChange={handleTextInputChange}
+        // onClick={() => handleTogglePopover(true)}
         ref={textInputRef}
+        inputMask="date"
         onBlur={handleBlur}
-        readOnly
+        // readOnly
+        suffix={(
+          <Button onClick={() => handleTogglePopover(true)} isNaked className="m-left-2xs">
+            <Icon name="calendar" className="font-color-primary" />
+          </Button>
+        )}
+        onInit={handleDateInputInit}
         {...restProps}
       />
     </Popover>

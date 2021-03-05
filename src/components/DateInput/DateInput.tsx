@@ -4,20 +4,20 @@ import React, {
   useRef,
   FocusEvent,
   useEffect,
+  SyntheticEvent,
 } from 'react';
 import Cleave from 'cleave.js';
-import * as TextInputMasks from '../TextInput/TextInputMasks';
-import getInputMask from '../TextInput/getInputMask';
 import DatePicker, { DatePickerProps } from '../DatePicker/DatePicker';
 import TextInput, { TextInputBaseProps, OnChangeHandler, InputMaskType } from '../TextInput/TextInput';
 import Popover, { PopoverProps } from '../Popover/Popover';
 import Icon from '../Icon/Icon';
 import Button from '../Button/Button';
+import { date } from 'components/TextInput/TextInputMasks';
 
 export interface DateInputProps {
   datePickerProps: DatePickerProps;
-  textInputProps: TextInputBaseProps & { inputMask: InputMaskType };
-  dateFormat?: string;
+  textInputProps: TextInputBaseProps & { inputMask: InputMaskType; };
+  // dateFormat?: string;
   dateOptions?: {
     locale?: globalThis.Locale | undefined;
     weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | undefined;
@@ -50,7 +50,7 @@ const defaultTextInputProps: Omit<TextInputBaseProps, 'id'> = {
 const DateInput: FC<DateInputProps> = ({
   datePickerProps,
   textInputProps,
-  dateFormat = 'MM/dd/yyyy',
+  // dateFormat = 'MM/dd/yyyy',
   dateOptions = undefined,
   onBlur,
   popoverProps = { ...defaultPopoverProps },
@@ -137,6 +137,12 @@ const DateInput: FC<DateInputProps> = ({
       cleaveInstance.setRawValue(dateRawValue);
     }
   }, [dateRawValue]);
+
+  useEffect(() => {
+    if (dateISOValue) {
+      mergedDatePickerProps.onChange(new Date(dateISOValue), {} as SyntheticEvent<any>)
+    }
+  }, [dateISOValue]);
  
   useEffect(() => {
     // These events are to trigger a blur event on the input at the correct time (for form validation)

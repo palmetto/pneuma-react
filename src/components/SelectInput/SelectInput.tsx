@@ -133,7 +133,7 @@ export const SelectInput: FC<SelectInputProps> = ({
   size = 'md',
   ...restProps
 }) => {
-  const handleChange = (values: ValueType<OptionTypeBase>) => {
+  const handleChange = (values: ValueType<OptionTypeBase, boolean>) => {
     const simulatedEventPayloadType: SimulatedEventPayloadType = {
       target: {
         name,
@@ -152,9 +152,14 @@ export const SelectInput: FC<SelectInputProps> = ({
     if (onBlur) onBlur(e);
   };
 
-  const wrapperClasses = classNames('select-input-wrapper', className, styles[size], {
-    [styles.disabled]: isDisabled,
-  });
+  const wrapperClasses = classNames(
+    'select-input-wrapper',
+    className,
+    styles[size],
+    {
+      [styles.disabled]: isDisabled,
+    }
+  );
 
   const inputClasses = classNames('react-select', { [styles.error]: error });
 
@@ -167,7 +172,7 @@ export const SelectInput: FC<SelectInputProps> = ({
     isDisabled,
   };
 
-  const ClearIndicator = (props: IndicatorProps<OptionTypeBase>) => (
+  const ClearIndicator = (props: IndicatorProps<OptionTypeBase, boolean>) => (
     <components.ClearIndicator {...props}>
       <Icon name="remove" />
     </components.ClearIndicator>
@@ -195,7 +200,12 @@ export const SelectInput: FC<SelectInputProps> = ({
         onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        styles={{ menuPortal: base => ({ ...base, zIndex: Number(Z_INDEX_VALUES.popover.value) }) }}
+        styles={{
+          menuPortal: base => ({
+            ...base,
+            zIndex: Number(Z_INDEX_VALUES.popover.value),
+          }),
+        }}
         value={value}
       />
       {error && typeof error !== 'boolean' && (

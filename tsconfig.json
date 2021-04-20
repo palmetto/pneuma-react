@@ -1,34 +1,37 @@
 {
+  // see https://www.typescriptlang.org/tsconfig to better understand tsconfigs
+  "include": ["src", "types", "tsdx.config.js"],
   "compilerOptions": {
-    "outDir": "./dist",
-    "baseUrl": "./src", // This must be specified if "paths" is.
-    "paths": {
-      "@palmetto/palmetto-design/tokens": ["../node_modules/@palmetto/palmetto-design-tokens"] // This mapping is relative to "baseUrl"
-    },
-    "declaration": true,
-    "declarationDir": "dist",
-    "emitDeclarationOnly": true,
-    "noEmit": false,
-    "allowSyntheticDefaultImports": true,
-    "target": "es6",
-    "sourceMap": true,
     "module": "esnext",
-    "moduleResolution": "node",
-    "jsx": "react",
+    "lib": ["dom", "esnext"],
+    "importHelpers": true,
+    // output .d.ts declaration files for consumers
+    "declaration": true,
+    // output .js.map sourcemap files for consumers
+    "sourceMap": true,
+    // match output dir to input dir. e.g. dist/index instead of dist/src/index
+    "rootDir": "./src",
+    // stricter type-checking for stronger correctness. Recommended by TS
     "strict": true,
-    "allowJs": true,
-    "skipLibCheck": true,
+    // linter checks for common issues
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    // noUnused* overlap with @typescript-eslint/no-unused-vars, can disable if duplicative
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    // use Node's module resolution algorithm, instead of the legacy TS one
+    "moduleResolution": "node",
+    // transpile JSX to React.createElement
+    "jsx": "react",
+    // interop between ESM and CJS modules. Recommended by TS
     "esModuleInterop": true,
-    "isolatedModules": true,
-    "resolveJsonModule": true,
-    "lib": [
-      "es2019",
-      "DOM"
-    ]
-  },
-  "include": [
-    "./src",
-    "./types",
-    "index.d.ts"
-  ]
+    // significant perf increase by skipping checking .d.ts files, particularly those in node_modules. Recommended by TS
+    "skipLibCheck": true,
+    // error out if import and file system have a casing mismatch. Recommended by TS
+    "forceConsistentCasingInFileNames": true,
+    // `tsdx build` ignores this option, but it is commonly used when type-checking separately with `tsc`
+    "noEmit": true,
+    "allowJs": true,
+    "resolveJsonModule": true
+  }
 }

@@ -1,0 +1,31 @@
+.radio-toggle-container {
+  &.sm {
+    > * {
+      height: 32px;
+    }
+  }
+
+  &.md {
+    > * {
+      height: 42px;
+    }
+  }
+
+  &.lg {
+    > * {
+      height: 55px;
+    }
+  }
+}
+
+.radio-toggle-indicator {
+  transition: left 0.2s;
+  will-change: transform;
+  left: 0;
+  top: 0;
+  transition-timing-function: cubic-bezier(0.67, 0.83, 0.67);
+
+  &.right {
+    left: 50%;
+  }
+}

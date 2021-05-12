@@ -20,6 +20,19 @@ Use a RadioToggle when a user can render one of two states. If there are more th
 
 <ArgsTable of={RadioToggle} />
 
+## Option Type
+
+The RadioToggle uses radio inputs under the hood, and so the type of the `RadioToggleOption` resembles the props required to populate an input:
+
+```
+{
+  value: RadioToggleProps['value'];
+  label: string | number;
+  id: string | number;
+  name: string;
+};
+```
+
 ## Default
 
 All that is required to render a basic version of the RadioToggle is the group's `name`, an onchange event handler passed to the `onChange` prop, and a list of options passed to the `options` prop. Each option must include a unique `id`, a `value`, and a `label`.

@@ -4,7 +4,7 @@ import getElementType from '../../lib/getElementType';
 import { FontColor, FontSize, ResponsiveProp } from '../../types';
 import { HEADING_LEVELS_TYPE, HEADING_DEFAULT_SIZE_MAP } from './Heading.constants';
 import generateResponsiveClasses from '../../lib/generateResponsiveClasses';
-import styles from './Heading.module.scss';
+// import styles from './Heading.module.scss';
 
 export interface HeadingProps {
   /**
@@ -51,7 +51,7 @@ export const Heading: FC<HeadingProps> = ({
   const headingSize = size || HEADING_DEFAULT_SIZE_MAP[as];
 
   const classes = classNames(
-    styles.heading,
+    // styles.heading,
     className,
     generateResponsiveClasses('font-size', headingSize),
     {

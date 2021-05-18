@@ -37,7 +37,7 @@ import getDimensionCss from '../../lib/getDimensionCss';
 import cssShorthandToClasses from '../../lib/cssShorthandToClasses';
 import getElementType from '../../lib/getElementType';
 import generateResponsiveClasses from '../../lib/generateResponsiveClasses';
-import styles from './Box.module.scss';
+// import styles from './Box.module.scss';
 
 export type HoverableBoxProperties = 'color' | 'borderColor' | 'shadow' | 'background';
 export interface BoxProps {
@@ -350,7 +350,7 @@ export const Box: FC<BoxProps> = forwardRef((
       [`font-color-${color}`]: color,
       [`border-color-${borderColor}`]: borderColor,
       [`cursor-${cursor}`]: cursor,
-      [styles['box-transition']]: hover || focus,
+      // [styles['box-transition']]: hover || focus,
     },
   );
 

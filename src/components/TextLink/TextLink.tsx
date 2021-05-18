@@ -1,7 +1,7 @@
 import React, { FC, MouseEvent, forwardRef } from 'react';
 import classNames from 'classnames';
 import reactRouterClickHandler from '../../lib/reactRouterClickHandler';
-import styles from './TextLink.module.scss';
+// import styles from './TextLink.module.scss';
 
 export interface TextLinkProps {
   /**
@@ -53,8 +53,8 @@ export const TextLink: FC<TextLinkProps> = forwardRef<HTMLAnchorElement, TextLin
   ref,
 ) => {
   const linkClasses = classNames(
-    styles['text-link'],
-    styles[variant],
+    // styles['text-link'],
+    // styles[variant],
     className,
   );
 

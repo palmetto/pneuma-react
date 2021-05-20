@@ -4,7 +4,7 @@
   "version": "0.0.0-development",
   "description": "A React component library to power all Palmetto UI.",
   "private": false,
-  "main": "dist/index.js",
+  "main": "dist/umd/palmetto-components.production.min.js",
   "types": "dist/src/index.d.ts",
   "files": [
     "dist"
@@ -75,6 +75,9 @@
     "@babel/plugin-transform-runtime": "^7.10.4",
     "@babel/polyfill": "^7.10.4",
     "@babel/preset-react": "^7.10.4",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-commonjs": "^19.0.0",
+    "@rollup/plugin-node-resolve": "^13.0.0",
     "@rollup/plugin-typescript": "^8.2.1",
     "@semantic-release/commit-analyzer": "^8.0.1",
     "@storybook/addon-a11y": "^6.0.27",
@@ -142,6 +145,8 @@
     "resolve-url-loader": "^3.1.2",
     "rimraf": "^3.0.2",
     "rollup": "^2.48.0",
+    "rollup-plugin-node-globals": "^1.4.0",
+    "rollup-plugin-postcss": "https://github.com/isaacl/rollup-plugin-postcss",
     "sass": "^1.26.8",
     "sass-loader": "^8.0.2",
     "sass-resources-loader": "^2.0.3",

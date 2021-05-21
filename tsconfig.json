@@ -7,7 +7,7 @@
     },
     "declaration": true,
     "declarationDir": "dist",
-    "emitDeclarationOnly": true,
+    // "emitDeclarationOnly": true,
     "noEmit": false,
     "allowSyntheticDefaultImports": true,
     "target": "es6",
@@ -23,7 +23,7 @@
     "resolveJsonModule": true,
     "lib": [
       "es2019",
-      "DOM"
+      "DOM",
     ]
   },
   "include": [

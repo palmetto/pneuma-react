@@ -31,8 +31,6 @@ export default {
     json(),
     commonjs(),
     typescript({
-      declaration: true,
-      declarationDir: 'dist/',
       rootDir: '.',
     }),
     postcss({

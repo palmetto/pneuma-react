@@ -32,7 +32,7 @@ export default {
     commonjs(),
     typescript({
       declaration: true,
-      declarationDir: 'dist/types/',
+      declarationDir: 'dist/',
       rootDir: '.',
     }),
     postcss({

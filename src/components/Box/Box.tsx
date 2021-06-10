@@ -25,6 +25,7 @@ import {
   CssJustifyContentValue,
   CssOverflowValue,
   CssTextAlignValue,
+  CssShortHandFormat,
   DimensionSize,
   FontColor,
   FontSize,
@@ -76,7 +77,7 @@ export interface BoxProps {
    * where you can set the border width on all four sides of an element.
    * e.g: "0 sm xs 0" --> top: 0, right: sm, bottom: xs, left: 0;
    */
-  borderWidth?: BorderSize | string | ResponsiveProp<BorderSize | string>;
+  borderWidth?: CssShortHandFormat<BorderSize> | ResponsiveProp<CssShortHandFormat<BorderSize>>;
   /**
    * Additional class names to add
    */

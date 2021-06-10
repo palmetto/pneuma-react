@@ -121,7 +121,8 @@ export type CssTextAlignValue =
   'center' |
   'right';
 
-export type BaseSpacing = SpacingSize | string | undefined;
+export type CssShortHandFormat<T extends string> = T | `${T} ${T}` | `${T} ${T} ${T}` | `${T} ${T} ${T} ${T}`;
+export type BaseSpacing = CssShortHandFormat<SpacingSize>;
 export type BorderRadiusSize = BorderRadius | string | undefined;
 
 export declare type ResponsiveProp<T> = { [breakpoint in BreakpointSizeWithBase]?: T };
